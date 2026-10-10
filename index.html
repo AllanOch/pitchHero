@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Pitch Hero – Prototype v0.4</title>
+<title>Pitch Hero – Pilot v0.4.2.1</title>
 <style>
 :root{
   --bg:#06131d;--panel:#0c2232;--panel2:#102a3c;--line:#1f4259;
@@ -49,7 +49,7 @@ button,input,select{font:inherit} button{cursor:pointer}
 .nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:min(430px,100%);height:72px;background:#091824;border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(5,1fr);z-index:20}.nav button{border:0;background:none;color:#849cab;font-size:11px}.nav button b{display:block;font-size:21px}.nav button.active{color:var(--green)}
 .toast{position:fixed;left:50%;bottom:88px;transform:translateX(-50%) translateY(20px);opacity:0;background:#eefaff;color:#071521;border-radius:999px;padding:10px 16px;font-weight:850;transition:.25s;z-index:60;white-space:nowrap}.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 .modal{display:none;position:fixed;inset:0;background:#020810de;z-index:50;padding:20px;align-items:center;justify-content:center}.modal.show{display:flex}.modal-box{width:min(390px,100%);background:#0b2132;border:1px solid var(--line);border-radius:22px;padding:20px;text-align:center}.confetti{font-size:30px;letter-spacing:6px}
-.testbar{position:sticky;top:66px;z-index:8;background:#0d2637;border:1px solid #31556c;border-radius:14px;padding:10px;margin:0 16px 10px;display:none}.testbar.show{display:block}.testbar .row{display:grid;grid-template-columns:repeat(3,1fr)}.testbar button{border:1px solid #35596e;background:#173548;color:#fff;border-radius:10px;padding:8px;font-size:12px}
+
 @media(max-width:360px){.big{font-size:26px}.clock{font-size:44px}.onboard h1{font-size:36px}}
 </style>
 </head>
@@ -60,23 +60,13 @@ button,input,select{font:inherit} button{cursor:pointer}
   <div class="avatar" id="headerAvatar">⚽</div>
 </header>
 
-<div class="testbar" id="testbar">
-  <div class="between"><b>🧪 Testmodus</b><button id="closeTest">Lukk</button></div>
-  <div class="row" style="margin-top:8px">
-    <button data-jump="20">+20 min</button>
-    <button data-jump="40">+40 min</button>
-    <button data-jump="60">+60 min</button>
-    <button id="testXp">+500 XP</button>
-    <button id="testPack">Ny pakke</button>
-    <button id="resetApp">Reset</button>
-  </div>
-</div>
+
 
 <main>
 <section id="onboarding" class="screen active">
   <div class="onboard">
     <div>
-      <div class="label">Prototype v0.4</div>
+      <div class="label">Pilot v0.4.2</div>
       <h1>SPILL.<br>SAMLE.<br><span>LEVEL UP.</span></h1>
       <p class="muted">Spill når det passer. Spill der det passer. Du velger hvordan du utvikler deg.</p>
     </div>
@@ -152,10 +142,7 @@ button,input,select{font:inherit} button{cursor:pointer}
     <button class="btn secondary" data-screen-link="routes">SE UNLOCK-VEIER</button>
   </div>
 
-  <div class="row">
-    <button class="btn" id="findPitchBtn">FINN BANE</button>
-    <button class="btn secondary" id="openTest">TESTMODUS</button>
-  </div>
+  <button class="btn" id="findPitchBtn">FINN BANE</button>
 </section>
 
 <section id="weekly" class="screen">
@@ -197,16 +184,13 @@ button,input,select{font:inherit} button{cursor:pointer}
   <div class="timer">
     <div class="label">ØKT PÅGÅR · <span id="sessionPitch">Djervbanen</span></div>
     <div class="clock" id="clock">00:00</div>
-    <p class="muted">Demo: 1 sekund = 1 minutt.</p>
+    <p class="muted">Legg bort mobilen og spill. Økten må vare i sanntid.</p>
   </div>
   <div class="card">
     <div class="milestone"><span>20 minutter</span><b id="m20">+100 XP</b></div>
     <div class="milestone"><span>40 minutter</span><b id="m40">+125 XP</b></div>
     <div class="milestone"><span>60 minutter</span><b id="m60">+150 XP + pakke</b></div>
   </div>
-  <button class="btn secondary" data-jump="20">HOPP TIL 20 MIN</button>
-  <button class="btn secondary" data-jump="40">HOPP TIL 40 MIN</button>
-  <button class="btn" data-jump="60">FULLFØR 60 MIN</button>
   <button class="btn red" id="endEarly">AVSLUTT ØKT</button>
 </section>
 
@@ -236,7 +220,7 @@ button,input,select{font:inherit} button{cursor:pointer}
 
 <section id="challenges" class="screen">
   <h2>Velg din challenge</h2>
-  <p class="muted">Velg én. Alle alternativene gir samme belønning, slik at ulike ferdighetsnivå kan delta.</p>
+  <p class="muted">Alle kan spilles. Fullfør dem i den rekkefølgen du vil. Hver challenge gir sin egen belønning.</p>
   <div class="option-grid" id="challengeOptions"></div>
   <div class="card">
     <div class="between"><b>Valgt challenge</b><span class="badge">+100 XP</span></div>
@@ -276,7 +260,20 @@ button,input,select{font:inherit} button{cursor:pointer}
     <button class="btn" id="claimSquadReward" disabled>HENT SQUAD-BELØNNING</button>
   </div>
   <div class="card">
-    <h3>Squaden din</h3>
+    <div class="card">
+    <h3>Legg til fiktiv venn</h3>
+    <label class="field"><span>Navn</span><input id="newFriendName" placeholder="F.eks. Elias"></label>
+    <label class="field"><span>Level</span><select id="newFriendLevel"></select></label>
+    <label class="field"><span>Avatar</span>
+      <select id="newFriendAvatar">
+        <option>⚽</option><option>🦁</option><option>🦅</option><option>🐯</option>
+        <option>🐺</option><option>🦊</option><option>🐻</option><option>🐉</option>
+      </select>
+    </label>
+    <button class="btn secondary" id="addFakeFriend">LEGG TIL VENN</button>
+  </div>
+
+  <h3>Squaden din</h3>
     <div id="squadList"></div>
   </div>
   <h3>Achievements</h3>
@@ -298,19 +295,19 @@ button,input,select{font:inherit} button{cursor:pointer}
 
 <script>
 (() => {
-const STORAGE='pitchHeroV04';
+const STORAGE='pitchHeroPilotV042';
 const freshState=()=>({
   onboarded:false,playerName:'Liam',avatar:'⚽',activityLevel:'normal',xp:0,coins:100,minutes:0,sessions:0,weekSessions:0,level:1,
   selectedPitch:'Djervbanen',pitchVisits:{},pitchMinutes:{},pendingPacks:0,weeklyClaims:0,
   weekly:{minutes:false,twoSessions:false,challenge:false,friend:false,hundred:false,claimed:false},
-  selectedChallenge:null,challengeDone:false,
+  selectedChallenge:null,challengeDone:{},
   cards:[
     {name:'Marco',rating:61,pos:'ANG',rarity:'common'},
     {name:'Leo',rating:64,pos:'MID',rarity:'common'},
     {name:'Noah',rating:63,pos:'FOR',rarity:'common'}
   ],
   achievements:{rookie:true,firstSession:false,explorer:false,collector:false,activeWeek:false},
-  squadSessions:0,squadRewardClaimed:false,squadReactions:{}
+  squadSessions:0,squadRewardClaimed:false,squadReactions:{},squadMembers:defaultSquadMembers.map(x=>({...x}))
 });
 let state=JSON.parse(localStorage.getItem(STORAGE)||'null')||freshState();
 
@@ -340,10 +337,10 @@ const achievements=[
 {id:'collector',icon:'🃏',name:'Collector',desc:'Samle 10 kort'},
 {id:'activeWeek',icon:'🔥',name:'Aktiv uke',desc:'3 økter samme uke'}
 ];
-const squadMembers=[
-{id:'mathias',name:'Mathias',level:7,status:'Var ute og spilte i dag',icon:'🦁'},
-{id:'sara',name:'Sara',level:6,status:'Åpnet en ny Football Pack',icon:'🦅'},
-{id:'noah',name:'Noah',level:5,status:'Fullførte en fotballøkt',icon:'🐺'}
+const defaultSquadMembers=[
+  {id:'mathias',name:'Mathias',level:7,status:'Var ute og spilte i dag',icon:'🦁'},
+  {id:'sara',name:'Sara',level:6,status:'Åpnet en ny Football Pack',icon:'🦅'},
+  {id:'noah',name:'Noah',level:5,status:'Fullførte en fotballøkt',icon:'🐺'}
 ];
 
 let sec=0,timer=null,sessionRunning=false;
@@ -363,7 +360,7 @@ function weeklyCount(){return ['minutes','twoSessions','challenge','friend','hun
 function updateDerived(){
   if(state.minutes>=40)state.weekly.minutes=true;
   if(state.sessions>=2)state.weekly.twoSessions=true;
-  if(state.challengeDone)state.weekly.challenge=true;
+  if(Object.values(state.challengeDone||{}).some(Boolean))state.weekly.challenge=true;
   if(state.minutes>=100)state.weekly.hundred=true;
   state.achievements.firstSession=state.sessions>=1;
   state.achievements.explorer=Object.keys(state.pitchVisits).filter(k=>state.pitchVisits[k]>0).length>=3;
@@ -452,15 +449,37 @@ function renderCollection(){
 function renderChallenges(){
   const box=qs('challengeOptions');box.innerHTML='';
   challengeChoices.forEach(c=>{
+    const done=!!(state.challengeDone||{})[c.id];
     const b=document.createElement('button');
     b.className='option'+(state.selectedChallenge===c.id?' selected':'');
-    b.innerHTML=`<b>${c.icon} ${c.title}</b><span class="small muted">${c.desc}</span>`;
-    b.addEventListener('click',()=>{state.selectedChallenge=c.id;renderChallenges();save()});
-    box.appendChild(b)
+    b.innerHTML=`<div class="between">
+      <span><b>${c.icon} ${c.title}</b><span class="small muted">${c.desc}</span></span>
+      <span class="badge">${done?'FERDIG':'+100 XP'}</span>
+    </div>`;
+    b.addEventListener('click',()=>{
+      state.selectedChallenge=c.id;
+      renderChallenges();
+      save();
+    });
+    box.appendChild(b);
   });
+
   const sel=challengeChoices.find(c=>c.id===state.selectedChallenge);
-  qs('selectedChallengeText').textContent=state.challengeDone?'Challenge fullført denne uka.':(sel?sel.title:'Ingen valgt ennå.');
-  qs('completeSelectedChallenge').disabled=!sel||state.challengeDone
+  const done=sel && !!(state.challengeDone||{})[sel.id];
+
+  if(!sel){
+    qs('selectedChallengeText').textContent='Ingen valgt ennå.';
+    qs('completeSelectedChallenge').disabled=true;
+    qs('completeSelectedChallenge').textContent='SIMULER FULLFØRT';
+  }else if(done){
+    qs('selectedChallengeText').textContent=`${sel.title} er fullført. Velg en annen challenge for å fortsette.`;
+    qs('completeSelectedChallenge').disabled=true;
+    qs('completeSelectedChallenge').textContent='ALLEREDE FULLFØRT';
+  }else{
+    qs('selectedChallengeText').textContent=sel.title;
+    qs('completeSelectedChallenge').disabled=false;
+    qs('completeSelectedChallenge').textContent='SIMULER FULLFØRT';
+  }
 }
 function renderWeekly(){
   const items=[
@@ -488,18 +507,26 @@ function renderAchievements(){
   })
 }
 function renderSquad(){
+  if(!Array.isArray(state.squadMembers))state.squadMembers=defaultSquadMembers.map(x=>({...x}));
+
   const total=Math.min(8,(state.squadSessions||0)+Math.min(state.weekSessions||0,3));
   qs('squadGoalNow').textContent=total;
   qs('squadGoalBar').style.width=Math.min(100,total/8*100)+'%';
   qs('squadGoalText').textContent=total>=8?'Squad-målet er fullført!':`${8-total} økter igjen`;
   qs('claimSquadReward').disabled=total<8||state.squadRewardClaimed;
+
   const list=qs('squadList'); list.innerHTML='';
-  squadMembers.forEach(m=>{
-    const d=document.createElement('div'); d.className='card challenge';
+  state.squadMembers.forEach(m=>{
+    const d=document.createElement('div');
+    d.className='card challenge';
     const reaction=(state.squadReactions||{})[m.id]||'👏';
-    d.innerHTML=`<div class="ico">${m.icon}</div><div class="grow"><b>${m.name} · Level ${m.level}</b><div class="small muted">${m.status}</div></div><button class="btn secondary react-btn" data-member="${m.id}" style="width:auto;margin:0;padding:8px 10px">${reaction}</button>`;
+    d.innerHTML=`<div class="ico">${m.icon}</div>
+      <div class="grow"><b>${m.name} · Level ${m.level}</b><div class="small muted">${m.status||'Klar for fotball'}</div></div>
+      <button class="btn secondary react-btn" data-member="${m.id}" style="width:auto;margin:0;padding:8px 10px">${reaction}</button>
+      <button class="btn red remove-friend-btn" data-member="${m.id}" style="width:auto;margin:0;padding:8px 10px">×</button>`;
     list.appendChild(d);
   });
+
   list.querySelectorAll('.react-btn').forEach(btn=>btn.addEventListener('click',()=>{
     const seq=['👏','🔥','⚽']; const id=btn.dataset.member;
     state.squadReactions=state.squadReactions||{};
@@ -507,14 +534,21 @@ function renderSquad(){
     state.squadReactions[id]=seq[(seq.indexOf(cur)+1)%seq.length];
     renderSquad(); save();
   }));
+
+  list.querySelectorAll('.remove-friend-btn').forEach(btn=>btn.addEventListener('click',()=>{
+    const id=btn.dataset.member;
+    state.squadMembers=state.squadMembers.filter(m=>m.id!==id);
+    if(state.squadReactions)delete state.squadReactions[id];
+    renderSquad(); save();
+    toast('Venn fjernet');
+  }));
 }
 function startSession(){
   sec=0;sessionRunning=true;clearInterval(timer);updateClock();['m20','m40','m60'].forEach(id=>qs(id).classList.remove('done'));show('session');
-  timer=setInterval(()=>{sec+=60;updateClock();checkMilestones();if(sec>=3600)finishSession()},1000)
+  timer=setInterval(()=>{sec+=1;updateClock();checkMilestones();if(sec>=3600)finishSession()},1000)
 }
 function updateClock(){const m=Math.floor(sec/60),s=sec%60;qs('clock').textContent=String(m).padStart(2,'0')+':'+String(s).padStart(2,'0')}
 function checkMilestones(){if(sec>=1200)qs('m20').classList.add('done');if(sec>=2400)qs('m40').classList.add('done');if(sec>=3600)qs('m60').classList.add('done')}
-function jumpTo(mins){if(!sessionRunning){toast('Start en økt først');return}sec=mins*60;updateClock();checkMilestones();if(mins>=60)finishSession()}
 function finishSession(){
   if(!sessionRunning)return;
   clearInterval(timer);timer=null;sessionRunning=false;checkMilestones();
@@ -559,6 +593,7 @@ function openPack(){
 function resetAll(){localStorage.removeItem(STORAGE);location.reload()}
 
 for(let y=2013;y<=2019;y++){const o=document.createElement('option');o.value=y;o.textContent=y;if(y===2018)o.selected=true;qs('birthYear').appendChild(o)}
+for(let l=1;l<=10;l++){const o=document.createElement('option');o.value=l;o.textContent='Level '+l;qs('newFriendLevel').appendChild(o)}
 ['⚽','🦁','🦅','🐯','🐺','🦊','🐻','🐉'].forEach((a,i)=>{
   const b=document.createElement('button');b.className='avatar-choice'+(i===0?' selected':'');b.textContent=a;
   b.addEventListener('click',()=>{document.querySelectorAll('.avatar-choice').forEach(x=>x.classList.remove('selected'));b.classList.add('selected');state.avatar=a});
@@ -567,7 +602,6 @@ for(let y=2013;y<=2019;y++){const o=document.createElement('option');o.value=y;o
 
 document.querySelectorAll('.nav button').forEach(b=>b.addEventListener('click',()=>show(b.dataset.screen)));
 document.querySelectorAll('[data-screen-link]').forEach(b=>b.addEventListener('click',()=>show(b.dataset.screenLink)));
-document.querySelectorAll('[data-jump]').forEach(b=>b.addEventListener('click',()=>jumpTo(Number(b.dataset.jump))));
 qs('startOnboarding').addEventListener('click',()=>show('parent'));
 qs('toChild').addEventListener('click',()=>show('child'));
 qs('createProfile').addEventListener('click',()=>{state.playerName=qs('childName').value.trim()||'Spiller';state.activityLevel=qs('activityLevel').value;state.onboarded=true;save();show('starter')});
@@ -577,20 +611,44 @@ qs('verifyPitch').addEventListener('click',()=>{toast('Bane bekreftet ✓');setT
 qs('endEarly').addEventListener('click',finishSession);
 qs('claimReward').addEventListener('click',()=>state.pendingPacks>0?beginPack():show('home'));
 qs('openPack').addEventListener('click',openPack);
-qs('completeSelectedChallenge').addEventListener('click',()=>{if(state.challengeDone||!state.selectedChallenge)return;state.challengeDone=true;state.weekly.challenge=true;state.xp+=100;toast('+100 XP');render()});
+qs('completeSelectedChallenge').addEventListener('click',()=>{
+  if(!state.selectedChallenge)return;
+  state.challengeDone=state.challengeDone||{};
+  if(state.challengeDone[state.selectedChallenge])return;
+
+  state.challengeDone[state.selectedChallenge]=true;
+  state.weekly.challenge=true;
+  state.xp+=100;
+
+  const completedCount=Object.values(state.challengeDone).filter(Boolean).length;
+  toast(`Challenge fullført! +100 XP · ${completedCount}/${challengeChoices.length}`);
+  state.selectedChallenge=null;
+  render();
+});
 qs('claimWeekly').addEventListener('click',()=>{
   if(weeklyCount()<3||state.weekly.claimed)return;
   state.weekly.claimed=true;state.weeklyClaims+=1;state.pendingPacks+=1;state.coins+=100;
   toast('Mystery Ball mottatt!');render();beginPack()
 });
 qs('closeLevel').addEventListener('click',()=>qs('levelModal').classList.remove('show'));
-qs('openTest').addEventListener('click',()=>qs('testbar').classList.add('show'));
-qs('closeTest').addEventListener('click',()=>qs('testbar').classList.remove('show'));
-qs('testXp').addEventListener('click',()=>{state.xp+=500;toast('+500 XP');render()});
-qs('testPack').addEventListener('click',()=>{state.pendingPacks+=1;beginPack()});
 qs('simulateSquadSession').addEventListener('click',()=>{state.squadSessions=(state.squadSessions||0)+1;toast('Squaden fikk +1 økt');render()});
+qs('addFakeFriend').addEventListener('click',()=>{
+  const name=qs('newFriendName').value.trim();
+  if(!name){toast('Skriv inn et navn');return}
+  state.squadMembers=Array.isArray(state.squadMembers)?state.squadMembers:defaultSquadMembers.map(x=>({...x}));
+  const id='friend_'+Date.now();
+  state.squadMembers.push({
+    id,
+    name,
+    level:Number(qs('newFriendLevel').value||1),
+    icon:qs('newFriendAvatar').value||'⚽',
+    status:'Ny i squaden'
+  });
+  qs('newFriendName').value='';
+  toast(`${name} lagt til i squaden`);
+  render(); save();
+});
 qs('claimSquadReward').addEventListener('click',()=>{const total=Math.min(8,(state.squadSessions||0)+Math.min(state.weekSessions||0,3));if(total<8||state.squadRewardClaimed)return;state.squadRewardClaimed=true;state.coins+=150;state.pendingPacks+=1;toast('Squad-belønning låst opp!');render();beginPack()});
-qs('resetApp').addEventListener('click',resetAll);
 
 render();
 if(state.onboarded)show('home');else show('onboarding');
